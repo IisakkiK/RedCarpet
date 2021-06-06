@@ -1,0 +1,221 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    
+}
+
+/*Popupit/modalit*/
+#headeri {
+    z-index: 2;
+}
+.modal{
+    display: none;
+    position: fixed;
+    z-index: 3;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    overflow:auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    /*padding: 20px;*/
+    border: 1px solid #888;
+    width: 95%;
+}
+.close{
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus{
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/*Sivumenu*/
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+.sidenav a:hover {
+      color: #f1f1f1;
+}
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/*Alasivut*/
+.historiaKuvat {
+    width: 100%;
+}
+
+.historiaKuvat2 {
+    width: 100%;
+}
+
+/*Fontit*/
+@font-face {
+    font-family: otsikkoFont;
+    src: url(Fontit/HeroicCondencedOtsikkofontti/HeroicCondensed-Light.otf);
+}
+@font-face {
+    font-family: popupFont;
+    src: url(Fontit/HeroicCondencedOtsikkofontti/HeroicCondensed-Bold.otf);
+}
+@font-face {
+    font-family: kehoFont;
+    src: url(Fontit/PoppinsLeipateksti/Poppins-Light.ttf);
+}
+#titlePopups{
+    font-family: popupFont;
+    font-size: 200%;
+    width: 150%;
+}
+#bodies {
+    font-family: kehoFont;
+}
+#bodiesPaikkalista {
+    font-family: kehoFont;
+    color: white;
+    text-align: center;
+}
+#bodiesPaikkalista:hover{
+    text-decoration: underline;
+}
+#titleAlasivut{
+    font-family: otsikkoFont;
+    font-size: 250%;
+    text-align: center;
+    color: white;
+}
+
+#titleAlasivut:hover{
+    text-decoration: underline;
+}
+#titleTapahtumapaikatPaaotsikot{
+    font-family: otsikkoFont;
+    font-size: 250%;
+    text-align: center;
+    color: white;
+}
+.nav-pills .nav-link.active {
+    background-color: #ff0000;
+    color: white;
+}
+
+.nav-pills a{
+    color: black;
+}
+
+.lista {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-family: kehoFont;
+}
+
+#titleAikatauluBiorex{
+    font-family: kehoFont;
+    text-align: center;
+}
+
+#test12 {
+    z-index: 10;
+}
+
+.modal::-webkit-scrollbar {
+    width: 0 !important;
+}
+
+.modal { 
+    overflow: -moz-scrollbars-none; 
+}
+
+.modal { -ms-overflow-style: none; }
+
+.sidenav::-webkit-scrollbar {
+    width: 0 !important;
+}
+
+.sidenav { 
+    overflow: -moz-scrollbars-none; 
+}
+
+.sidenav { -ms-overflow-style: none; }
+
+@media screen and (min-width: 962px){
+    /*.modal {
+        background-color: transparent;
+        background-color: transparent;
+    }*/
+    .modal-content {
+        margin-top: 100px;
+        width: 30%;
+    }
+    .sidenav {
+        left: 0;
+    }
+}
+
+@media screen and (min-width: 321px) and (max-width: 961px) {
+    /*.modal {
+        background-color: transparent;
+        background-color: transparent;
+    }*/
+    .modal-content {
+        margin-top: 100px;
+        width: 80%;
+    }
+    .sidenav {
+        left: 0;
+    }
+}
+
+/*@media screen and (min-width: 720px) {
+    .modal {
+        
+        background-color: transparent;
+        background-color: transparent;
+    }
+    .modal-content {
+        margin-top: 100px;
+        width: 30%;
+    }
+    .sidenav {
+        left: 0;
+    }
+}*/

@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>
+			Red Carpet
+		</title>
+		<link rel="icon" href="images/RCFF_basiclogo_rgb_red.png" type="image/gif" sizes="16x16">
+
+		<script src="jquery-3.5.1.min.js"> //https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/</script>
+		<!--script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script-->
+		<script src="bootstrap-4.5.0-dist/js/bootstrap.min.js"></script>
+		<script src="modalClosing.js"></script>
+		
+		<link rel="stylesheet" href="bootstrap-4.5.0-dist/css/bootstrap.min.css">
+
+		<link rel="stylesheet" type="text/css" href="redcarpetCss.css">
+
+		<link rel ="stylesheet" href="leafletKirjasto/leaflet.css"/>	
+		<script src="leafletKirjasto/leaflet.js"></script>
+
+		
+		<style>
+			#mapid {
+				z-index: 1;
+				position: absolute;
+				top: 105px;
+				bottom: 0;
+				width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="headeri">
+			<a class="navbar-brand" id="modaltestia" role="button">
+				<img src="images/RCFF_basiclogo_rgb_red.png" alt="Red carpet logo" width="100" >
+			</a>
+	
+			<span style="font-size: 50px; cursor:pointer; color:#f0f0f0" onclick="avaaNav()">&#9776;</span>
+	
+		</nav>
+
+	<div id="mapid">
+		<div class="leaflet-bottom leaflet-left">
+			<img class="leaflet-control" src="HAMK.png" style="width:200px;">
+		</div>
+	</div>
+
+	<div id="sivuNavi" class="sidenav"> <!--SIVUVALIKON SISÄLTÖ ALKAA-->
+		<a href="javascript:void(0)" class="closebtn" onclick="suljeNav()">&times;</a>
+		<a onclick="testinavi()" type="button" id="titleAlasivut" style="background-color:#111111">TAPAHTUMAPAIKAT</a>
+		<a href="https://redcarpetfestari.fi/aikataulu/" id="titleAlasivut" target="_blank">AIKATAULU</a>
+		<a href="https://redcarpetfestari.fi/liput/" id="titleAlasivut" target="_blank">LIPUT</a>
+		<a href="https://redcarpetfestari.fi/info/" id="titleAlasivut" target="_blank">INFO</a> 
+		<a href="https://redcarpetfestari.fi/rcff/#historia" id="titleAlasivut" target="_blank">HISTORIA</a>
+	</div> <!--SIVUVALIKON SISÄLTÖ LOPPUU-->
+
+	<div id="testinavi" class="sidenav">
+		<a href="javascript:void(0)" class="closebtn" onclick="testinaviSulje()">&times;</a>
+
+		<h3 id="titleTapahtumapaikatPaaotsikot"><img src="icons/rcff_elokuvat_1080p.png" width="64" height="64"/>&nbsp;ELOKUVAT</h3>
+		<hr color="gray" width="70%">
+		<a onclick="paikkaKohdistus(iconSveitsiBiorex)" type="button" id="bodiesPaikkalista" style="background-color:#111111">BioRex Sveitsi</a>
+		<a onclick="paikkaKohdistus(iconKinoma)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Kinoma</a>
+		<a onclick="paikkaKohdistus(iconHyvinkaasali)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Hyvinkääsali</a>
+		<a onclick="paikkaKohdistus(iconJulia)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Julia 1 & 2</a>
+
+		<br><br>
+
+		<h3 id="titleTapahtumapaikatPaaotsikot"><img src="icons/rcff_oheistapahtumat_1080p.png" width="64" height="64"/>&nbsp;OHEISTAPAHTUMAT</h3>
+		<hr color="gray" width="70%">
+		<a onclick="paikkaKohdistus(iconTahti)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Tähtiraitti</a>
+		<a onclick="paikkaKohdistus(iconKulttuuriterassi)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Kulttuuriterassi</a>
+		<a onclick="paikkaKohdistus(iconWilla)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Kauppakeskus Willa</a>
+		<a onclick="paikkaKohdistus(iconKirkko)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Hyvinkään kirkko</a>
+		<a onclick="paikkaKohdistus(iconKirjasto)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Hyvinkään pääkirjasto</a>
+		<a onclick="paikkaKohdistus(iconSveitsiViihdekeskus)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Viihdekeskus Sveitsi</a>
+		
+		<br><br>
+
+		<h3 id="titleTapahtumapaikatPaaotsikot"><img src="icons/rcff_ikonit_extra_nahtavyys_black_1080p.png" width="64" height="64"/>&nbsp;MUUT</h3>
+		<hr color="gray" width="70%">
+		<a onclick="paikkaKohdistus(iconSveitsiHotel)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Hotel Sveitsi</a>
+		<a onclick="paikkaKohdistus(iconTaidemuseo)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Hyvinkään taidemuseo</a>
+		<a onclick="paikkaKohdistus(iconEntinenElävä)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Entinen elokuvateatteri Arena</a>
+		<a onclick="paikkaKohdistus(iconRautatiemuseo)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Rautatiemuseo</a>
+		<a onclick="paikkaKohdistus(iconRautatieasema)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Rautatieasema</a>
+		<a onclick="paikkaKohdistus(iconLinjaautoasema)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Linjala</a>
+		<a onclick="paikkaKohdistus(iconOnnikortteli)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Onnikortteli</a>
+		
+	</div>
+	
+	<!--POPUP SIVUT ALKAA-->
+
+	<div id="modalWilla" class="modal"> <!--WILLAN POPUP -SIVU -->
+		
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">KAUPPAKESKUS WILLA</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('modalWilla')">
+					<span aria-hidden="true">&times;</span> 
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/willa.jpg"> <!--POPUP SIVUN KUVA-->
+				<hr> 
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+				
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-events-tab" data-toggle="pill" href="#pills-aikatauluWilla" role="tab" aria-controls="pills-events" aria-selected="true">Aikataulu</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-infoWilla" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaWilla" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-aikatauluWilla" role="tabpanel" aria-labelledby="pills-events-tab"> <!--AIKATAULU SIVUN SISÄLTÖ-->
+						<h4 id="bodies">Lauantai 15.8.</h4>
+						<dt>Actors Studio: Elena Leeve</dt>
+						<dd>13:00 │ Kauppakeskus Willan Robert's coffeen lava │ Vapaa pääsy</dd>
+
+						<h4 id="bodies">Lauantai 22.8.</h4>
+						<dt>Actors Studio: Johannes Holopainen</dt>
+						<dd>13:00 │ Kauppakeskus Willan Robert's coffeen lava │ Vapaa pääsy</dd>
+						<hr>
+						<p id="bodies">Tarkemman aikataulun sekä muutokset näet <a href="https://redcarpetfestari.fi/aikataulu/" target="_blank">aikataulusta</a></p>
+					</div> <!--AIKATAULUN SISÄLTÖ LOPPUU-->
+					
+					<div class="tab-pane fade show" id="pills-infoWilla" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<p>
+							Hyvinkään ydinkeskustassa sijaitsevassa Kauppakeskus Willassa järjestetään Red Carpetin oheisohjelmaa.<br><br>
+							Maksuttomat Red Carpet Actors Studiot tuovat suomalaisen elokuvan tähdet ja elokuvien yleisön yhteen Willan toritason Robert's coffeen lavalla,
+							jossa elokuva-alan ammattilaisia haastattelee Red Carpetin taiteellinen johtaja, näyttelijä Antti Luusuaniemi.<br><br>
+							Red Carpet Lounge sijaitsee kauppakeskuksen 3. kerroksessa.
+							Lounge kutsuu istahtamaan hetkeksi shoppailun lomassa ja virittäytymään tulevan Red Carpetin tunnelmaan ja juhlahumuun.
+							Katso Loungessa Red Carpetin lyhytelokuvia, nuorten tekemiä elokuvia, aiemmin vuosien fiiliksiä sekä muuta Red Carpet -materiaalia.
+						</p>
+						<dt>Esteettömyys</dt>
+						<dd>Kauppakeskukseen on esteetön sisäänkäynti.
+							Kerrosten välillä on henkilöhissi, ja ovet ovat automaattiset.
+							Pysäköinti on esteetön</dd>
+						<dt>Pysäköinti</dt>
+						<dd>Willan parkkihallissa on maksuton pysäköinti (1h ja 4h).
+							1 h pysäköintipaikat on sijoitettu sisäänkulkujen välittömään läheisyyteen ja loput parkkihallien pysäköintipaikoista ovat 4 h paikkoja.
+							Willasta löytyy myös sähköautojen latauspisteitä. Parkkihallin korkeus on 2,3 m.</dd>
+						<dt>Osoite</dt>
+						<dd>Hämeenkatu 9, 05800 Hyvinkää</dd>
+						<dt><a href="https://www.kauppakeskuswilla.fi" target="_blank">Nettisivut</a></dt>
+					</div> <!--INFON SISÄLTÖ LOPPUU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaWilla" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							Hyvinkään keskustan kauppakeskuksen rakennustyöt aloitettiin vuonna 2010.
+							Kauppakeskuksen alta purettiin muun muassa Hyvinkään vanha kaupungintalo sekä Valtion virastotalo.<br>
+							Willan ensimmäinen osa avattiin 29. maaliskuuta 2012 ja toinen osa lokakuussa 2012.<br>
+							Nimi Willa viittaa Hyvinkään historialliseen Villatehtaaseen.<br>
+							Willa on Suomen seitsemänneksi suurin kauppakeskus, jossa asioi yli 140 000 asiakasta viikossa.
+						</p>
+					</div> <!--HISTORIAN SISÄLTÖ LOPPUU-->
+				</div>
+			</div>
+		</div>
+	</div> <!--WILLAN POPUP SIVU LOPPUU-->
+
+	<div id="modalHyvinkaansali" class="modal"> <!--HYVINKÄÄSALIN POPUP SIVU-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">HYVINKÄÄSALI</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('modalHyvinkaansali')">
+					<span aria-hidden="true">&times;</span> 
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/hyvinkaasali.jpg"> <!--POPUP SIVUN KUVA-->
+				<hr> <!---->
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+				
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-open-tab" data-toggle="pill" href="#pills-aikatauluSali" role="tab" aria-controls="pills-open" aria-selected="true">Aikataulu</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-infoSali" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaSali" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+					
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+				
+					<div class="tab-pane fade show active" id="pills-aikatauluSali" role="tabpanel" aria-labelledby="pills-events-tab"> <!--AIKATAULU SIVUN SISÄLTÖ-->
+						<h4 id="bodies">Perjantai 28.8.</h3>
+							<dt>Kantti-seminaari</dt>
+							<dd>11:00 │ Hyvinkääsali│ <a href="https://redcarpetgroup.fi/kantti/" target="_blank">redcarpetgroup.fi/kantti</a></dd>
+							<hr>
+							<p id="bodies">Tarkemman aikataulun sekä muutokset näet <a href="https://redcarpetfestari.fi/aikataulu/" target="_blank">aikataulusta</a></p>
+					</div> <!--AIKATAULU SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-infoSali" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<video width="100%" height="100%" controls id="hyvinkaasaliVideo">
+							<source src="videot/rcff2_leffavideo_karttaan_visulla_20s.mp4" type="video/mp4">
+						</video>
+						<hr>
+						<p>
+							Hyvinkääsalissa järjestetään Red Carpetin aikaan elokuvanäytöksiä ja
+							oheisohjelmana musiikkiesityksiä sekä yrityksille suunnattu Kantti-seminaari 28.8.2020
+						</p>
+						<dt>Esteettömyys</dt>
+						<dd>Hyvinkääsali on esteetön ja salissa on pyörätuolipaikkoja.
+							Kerrosten välillä on henkilöhissi, ja ovilla on siirrettävät luiskat pyörätuoleille
+						</dd>
+						<dt>Pysäköinti</dt>
+						<dd>Salin edustalla on arkisin maksuton pysäköintimahdollisuus klo 17-23, lauantaisin klo 15-23 ja sunnuntaisin klo 6-23.
+							Salin alapuolella parkkihallissa on maksuton kolmen tunnin pysäköinti klo 22:30 saakka.
+							Parkkihallista on henkilöhissi Hyvinkääsalin tiloihin
+						</dd>
+						<dt>Osoite</dt>
+						<dd>Kauppatori 1, 05800 Hyvinkää</dd>
+						<dt><a href="https://www.hyvinkaa.fi/hyvinkaasali1/" target="_blank">Nettisivut</a></dt>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaSali" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							Hyvinkääsali on vuonna 1987 valmistunut Hyvinkään oma kulttuuri- ja konserttikeskus
+							kaupungin ydinkeskustassa.<br><br>
+							Arkkitehti Ilpo Raunion suunnittelemassa Hyvinkääsalissa on 427 paikkaa ja nouseva katsomo.
+						</p>
+					</div> <!--HISTORIA SIVUN LOPPU-->
+				</div>
+			</div>
+
+		</div>
+	</div> <!--HYVINKÄÄSALIN POPUP SIVUN LOPPU-->
+
+	<div id="modalRautatieasema" class="modal"> <!--RAUTATIEASEMAN POPUP SIVU-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">RAUTATIEASEMA / HYVINKÄÄN PAIKALLISLIIKENNE</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('modalRautatieasema')">
+					<span aria-hidden="true">&times;</span> 
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/rautatieasema.jpg">
+				<hr>
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+				
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-events-tab" data-toggle="pill" href="#pills-aikatauluRautatie" role="tab" aria-controls="pills-events" aria-selected="true">Aukioloajat</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-infoRautatie" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaRautatie" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+				
+					<div class="tab-pane fade show active" id="pills-aikatauluRautatie" role="tabpanel" aria-labelledby="pills-events-tab"> <!--AUKIOLOAJAT SIVUN SISÄLTÖ-->
+						<dt>Lipunmyynti</dt>
+						<dd>ma klo 6:30 - 15:00</dd>
+						<dd>ti-pe klo 6:30 - 17:00</dd>
+						<dd>la-su suljettu</dd>
+						<dt>Odotustilat</dt>
+						<dd>ma-pe klo 5:30 - 19:00</dd>
+						<dd>la klo 7:00 - 18:00</dd>
+						<dd>su suljettu</dd>
+					</div> <!--AUKIOLOAJAT SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-infoRautatie" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<p>
+							Hyvinkään rautatieasema on alkuperäisistä pääradan asemista Järvenpään aseman ohella ainut asemarakennus, joka toimii yhä alkuperäisessä käyttötarkoituksessaan.<br>
+							Hyvinkään uudet ja vanhat rautatieasemat ovat myös yksi Museoviraston vuonna 2009 määrittelemistä valtakunnallisesti merkittävistä rakennetuista kulttuuriympäristöistä.<br>
+							Red Carpetin festaribussi kulkee Rautatieaseman kautta Sveitsiin, linja 6. Festaribussi on maksuton elokuvalippua näyttämällä.
+						</p>
+						<dt>Esteettömyys</dt>
+						<dd>Asemarakennukseen pääsy on esteellinen portaiden vuoksi. Lipun ostoa varten ulkopuolella on kaksi lippuautomaattia.</dd>
+						<dt>Pysäköinti</dt>
+						<dd>Rautatieasemalla on 300 pysäköintipaikkaa autoille ja 472 pysäköintipaikkaa polkupyörille.</dd>
+						<dt>Osoite</dt>
+						<dd>Rautatienkatu 9, 05800 Hyvinkää</dd>
+						<dt><a href="https://www.vr.fi/cs/vr/fi/hyvinkaa_fi" target="_blank">Nettisivut</a></dt>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaRautatie" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							Vuonna 1862 valmistuneen asemarakennuksen on suunnitellut arkkitehti Carl Albert Edelfelt, ja se on Hyvinkään keskustan vanhin julkinen rakennus.<br><br>
+							Alkuperäistä rakennuksessa on sen keskiosa ja päädyt valmistuivat laajennuksen yhteydessä 1890-luvulla.<br><br>
+							Suomen ensimmäinen asemaravintola on aloittanut toimintansa Hyvinkään asemarakennuksessa 31.1.1862 rautatien vihkiäisjunan kutsuvierailutapahtuman yhteydessä.
+						</p>
+					</div> <!--HISTORIA SIVUN LOPPU-->
+				</div>
+			</div>
+			
+		</div>
+	</div> <!--RAUTATIEASEMAN SIVUN LOPPU-->
+
+	<div id="modalJulia" class="modal"> <!--JULIA1&2 POPUP SIVU-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">JULIA 1 & 2</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('modalJulia')">
+					<span aria-hidden="true">&times;</span> 
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/julia12.jpg"> 
+				<hr> <!---->
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"><!--VÄLILEHTIEN OTSIKOT ALKAA-->
+				
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-open-tab" data-toggle="pill" href="#pills-infoJulia" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaJulia" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+				</ul><!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-infoJulia" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<video width="100%" height="100%" controls id="juliaVideo">
+							<source src="videot/rcff2_leffavideo_karttaan_visulla_20s.mp4" type="video/mp4">
+						</video>
+						<hr>
+						<p>
+							Elokuvateatteri Julia 1 & 2:ssa nähdään Red Carpetin aikaan yksityisnäytöksiä.
+						</p>
+						<dt>Esteettömyys</dt>
+						<dd>Julia 1 & 2 on esteetön ja salit sisältävät pyörätuolipaikkoja.</dd>
+						<dt>Pysäköinti</dt>
+						<dd>Ei omia parkkipaikkoja. Maksuton pysäköinti läheisillä kaduilla parkkikiekolla.</dd>
+						<dt>Osoite</dt>
+						<dd>Hämeenkatu 34, 05800 Hyvinkää.</dd>
+						<dt><a href="https://www.juliaelokuvat.fi" target="_blank">Nettisivut</a></dt>
+					</div><!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaJulia" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							Hyvinkäällä sijaitsevan elokuvateatteri Julian rakennus valmistui jo vuonna 1940.
+							Ennen Juliaa samalla paikalla sijaitsi elokuvateatteri Harjula, joka kuitenkin tuhoutui talvisodan pommituksissa 20.1.1940.
+							Uudelleen rakennetun teatterin nimeksi tuli Aula, jonka nimi vuonna 1986 vaihdettiin Juliaksi. Samalla elokuvateatterin toinen sali avattiin. 
+							Nykyisen omistajan Arto Mattilan pitämässä teatterissa on ensimmäisessä salissa 110 paikkaa ja toisessa salissa 70 paikkaa. Iso sali uusittiin vuonna 2018.
+							Julia 1 & 2 on yksi kolmesta Hyvinkään elokuvateatterista.
+						</p>
+					</div><!--HISTORIA SIVUN LOPPU-->
+				</div>
+			</div>
+
+		</div>
+	</div><!--JULIA1&2 SIVUN LOPPU-->
+
+	<div id="modalKinoma" class="modal"> <!--KINOMAN POPUP SIVU-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">KINOMA</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('modalKinoma')">
+					<span aria-hidden="true">&times;</span> 
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/kinoma.jpg">
+				<hr> <!---->
+			
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-events-tab" data-toggle="pill" href="#pills-aikatauluKinoma" role="tab" aria-controls="pills-events" aria-selected="true">Aikataulu</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-infoKinoma" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaKinoma" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-aikatauluKinoma" role="tabpanel" aria-labelledby="pills-events-tab"> <!--AIKATAULU SIVUN SISÄLTÖ-->
+						<h4 id="bodies">Perjantai 28.8.</h3>
+							<dd><a href="https://redcarpetfestari.fi/elokuva/nuoret-elokuvantekijat-goes-red-carpet/" target="_blank">Nuoret elokuvantekijät goes Red Carpet</a></dd>
+							<dd>19:00 │ Kinoma │ vapaa pääsy │ Lapset ja nuoret</dd>
+	
+							<h4 id="bodies">Lauantai 29.8.</h3>
+							<dd><a href="https://redcarpetfestari.fi/elokuva/lapset-elokuvantekijoita-lyhytelokuvia/" target="_blank">Lapset elokuvantekijöitä -lyhytelokuvia</a></dd>
+							<dd>13:00 │ Kinoma │ vapaa pääsy │ Lapset ja nuoret</dd>
+							<hr>
+							<p id="bodies">Tarkemman aikataulun sekä muutokset näet <a href="https://redcarpetfestari.fi/aikataulu/" target="_blank">aikataulusta</a></p>
+					</div> <!--AIKATAULU SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-infoKinoma" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<video width="100%" height="100%" controls id="kinomaVideo">
+							<source src="videot/rcff2_leffavideo_karttaan_visulla_20s.mp4" type="video/mp4">
+						</video>
+						<hr>
+						<p>
+							Elokuvateatteri Kinomassa järjestetään Red Carpetin aikaan yksityisnäytöksiä ja ilmaisnäytöksiä.
+						</p>
+						<dl>
+							<dt>Esteettömyys</dt>
+							<dd>Kinoma ei ole esteetön elokuvasalissa olevien portaiden ja hissin puuttumisen vuoksi.</dd>
+							<dt>Pysäköinti</dt>
+							<dd>Ei omia parkkipaikkoja. Maksuton pysäköinti läheisillä kaduilla parkkikiekolla.</dd>
+							<dt>Osoite</dt>
+							<dd>Ahdenkallionkatu 3, 05820 Hyvinkää.</dd>
+							<dt><a href="http://www.hyvleffat.fi/" target="_blank">Nettisivut</a></dt>
+							
+						</dl>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaKinoma" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							Elokuvateatteri Kinoma avattiin Hyvinkäälle tammikuussa 1955.<br><br>
+							Idea Kinoman perustamisesta syntyi liikemies Arvo Suomelle hänen jäätyään ilman pääsylippuja erään loppuunmyydyn elokuvan näytäntöön.<br><br>
+							Teatterissa oli alunperin 237 paikkaa. 1970-luvulta asti teatteria pyörittänyt Keijo Aho myi kiinteistönsä ja teatterinsa vuonna 2019.
+							Nykyinen teatterin omistaja Kari Härkönen on tehnyt muutoksia Kinomaan.
+							Teatterisalin on saanut anniskeluoikeuden, ja teatterin penkkimuodostelma on kokenut muutostöitä. Teatteri on nykyään 221 paikkainen.<br><br>
+							Kinoma on yksi kolmesta Hyvinkään elokuvateatterista.
+						</p>
+					</div> <!--HISTORIA SIVUN LOPPU-->
+				</div>
+			</div>
+
+		</div>
+	</div> <!--KINOMA SIVUN LOPPU-->
+
+	<div id="modalHyvinkaankirkko" class="modal"> <!--HYVINKÄÄN KIRKON POPUP SIVU-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">HYVINKÄÄN KIRKKO</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('modalHyvinkaankirkko')">
+					<span aria-hidden="true">&times;</span> 
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/Hyvinkaankirkko_M.jpg">
+				<hr> <!---->
+				
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-events-tab" data-toggle="pill" href="#pills-aikatauluKirkko" role="tab" aria-controls="pills-events" aria-selected="true">Aikataulu</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-infoKirkko" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaKirkko" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-aikatauluKirkko" role="tabpanel" aria-labelledby="pills-events-tab"> <!--AIKATAULU SIVUN SISÄLTÖ-->
+						<h4 id="bodies">Lauantai 29.8</h4>
+						<dt>Uskonto elokuvissa -keskustelutilaisuus</dt>
+						<dd>14:00 │ Hyvinkään kirkko | Vapaa pääsy</dd>
+						<hr>
+						<p id="bodies">Tarkemman aikataulun sekä muutokset näet <a href="https://redcarpetfestari.fi/aikataulu/" target="_blank">aikataulusta</a></p>
+					</div> <!--AIKATAULU SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-infoKirkko" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<p>
+							Red Carpetin aikaan Hyvinkään kirkossa järjestetään lauantaina 29.8.2020 klo 14 maksuton Uskonto elokuvissa- keskustelutilaisuus,
+							jossa perehdytään elokuvissa esiintyvään uskontoteemaan.<br>
+							Keskustelussa on mukana elokuva-alan ohjaajia, näyttelijöitä ja seurakunnan edustajia.<br>
+							Hyvinkään kirkko on avoinna koko vuoden klo 9-16.
+						</p>
+						<dt>Esteettömyys</dt>
+						<dd>Kirkko on esteetön</dd>
+						<dt>Pysäköinti</dt>
+						<dd>Kirkon pihasta löytyy pysäköintipaikkoja autoille</dd>
+						<dt>Osoite</dt>
+						<dd>Hämeenkatu 16, 05801 Hyvinkää</dd>
+						<dt><a href="https://www.hyvinkaanseurakunta.fi/kirkot-ja-tilat/kirkot/hyvinkaan-kirkko" target="_blank">Nettisivut</a></dt>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaKirkko" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							Hyvinkään kirkko on vihitty käyttöön 29.1.1961.<br><br>
+							Se on professori Aarno Ruusuvuoren suunnittelema tyylillisesti moderni kirkko.<br><br>
+							Kirkon muodoissa toistuu kolmiokuvio.
+						</p>
+					</div> <!--HISTORIA SIVUN LOPPU-->
+				</div>
+			</div>
+
+		</div>
+	</div> <!--HYVINKÄÄN KIRKON SIVUN LOPPU-->
+
+	<div id="modalHyvinkaanlinjaautoasema" class="modal"> <!--HYVINKÄÄN LINJA-AUTOASEMAN POPUP SIVU-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">LINJALA</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('modalHyvinkaanlinjaautoasema')">
+					<span aria-hidden="true">&times;</span> 
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/linjaautoasema.jpg">
+				<hr>
+				
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-open-tab" data-toggle="pill" href="#pills-infoLinjaautoasema" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaLinjaautoasema" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-infoLinjaautoasema" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<p>
+							Hyvinkään linja-autoasema tunnetaan paremmin nimellä Linjala.
+							Linja-autoaseman asemarakennus ei ole enää käytössä.
+							Rautatieaseman läheisyydessä sijaitsevassa Linjalasta lähtevät suurelta osin pitkän matkan linjat.
+							Hyvinkään Liiikenteen operoimat paikallisliikenteen linjat lähtevät Rautatieaseman pihasta.
+							Tarkista oman linjasi lähtöpaikka lipun oston yhteydessä.
+							Red Carpetin festaribussi kulkee Rautatieaseman kautta Sveitsiin, linja 6. Festaribussi on maksuton elokuvalippua näyttämällä.
+						</p>
+						<dt>Esteettömyys</dt>
+						<dd>Paikka on esteetön.</dd>
+						<dt>Pysäköinti</dt>
+						<dd>Lähialueelta löytyy maksuttomia pysäköintipaikkoja parkkikiekolla kadun varressa ja arkkialueilla.</dd>
+						<dt>Osoite</dt>
+						<dd>Uudenmaankatu 8, 05800 Hyvinkää</dd>
+						<dt><a href="http://www.hyvinkaanliikenne.fi" target="_blank">Hyvinkään liikenteen nettisivut</a></dt>
+						<dt><a href="https://www.matkahuolto.fi/" target="_blank">Matkahuollon nettisivut</a></dt>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaLinjaautoasema" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							Hyvinkään Kauppala sai ajanmukaisen linja-autoaseman vuonna 1955.
+							Arkkitehti Risto Sammalkorven suunnittelemana linja-autoasema avattiin samana vuonna kuin avattiin Hyvinkään keskustassa kulkeva Uudenmaankatu.<br><br>
+							Rakennus tunnetaan myös nimellä Linjala.
+						</p>
+					</div> <!--HISTORIA SIVUN LOPPU-->
+				</div>
+			</div>
+
+		</div>
+	</div> <!--HYVINKÄÄN LINJA-AUTOASEMAN SIVUN LOPPU-->
+
+	<div id="viihdekeskusSveitsi" class="modal"> <!--VIIHDEKESKUS SVEITSIN POPUP SIVU-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">VIIHDEKESKUS SVEITSI</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('viihdekeskusSveitsi')">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/sveitsi/viihdekeskus.jpg">
+				<hr>
+				
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-open-tab" data-toggle="pill" href="#pills-infoViihdekeskus" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaViihdekeskus" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-infoViihdekeskus" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<p>
+							Sveitsin Viihdekeskus löytyy tekemistä kaikenikäisille, ja se tarjoaa monipuolisia elämyspalveluita.<br>
+							Sveitsissä sijaitsee elokuvateatteri BioRex Sveitsi, SuperPark,
+							SeikkailuSveitsi WayOut -huonepakopeli, Fit Park -liikuntakeskus sekä Sveitsin uimala.
+						</p>
+						<dt>Esteettömyys</dt>
+						<dd>Sveitsissä on esteettömät kulkuväylät, ja kerrosten välillä on henkilöhissi.
+							Lisäksi alueelta löytyy pyörätuolien käyttäjille soveltuva pysäköinti.</dd>
+						<dt>Pysäköinti</dt>
+						<dd>Paikan edustalla on noin 150 parkkipaikkaa,
+							jotka ovat vieraiden käytettävissä veloituksetta.</dd>
+						<dt>Osoite</dt>
+						<dd>Härkävehmaankatu 4, 05900 Hyvinkää</dd>
+						<dt><a href="https://visithyvinkaa.fi/sveitsi/" target="_blank">Nettisivut</a></dt>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaViihdekeskus" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							Sveitsin viihdekeskus avautui samassa yhteydessä toimivan Hotel Sveitsin kanssa vuoden 2017 lopussa.
+						</p>
+					</div> <!--HISTORIA SIVUN LOPPU-->
+				</div>
+			</div>
+		</div>
+	</div> <!--VIIHDEKESKUS SVEITSIN SIVUN LOPPU-->
+
+	<div id="hotelSveitsi" class="modal"> <!--HOTEL SVEITSIN POPUP SIVU-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">HOTEL SVEITSI</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('hotelSveitsi')">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/sveitsi/hotelsveitsi.jpg">
+				<hr>
+				
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-events-tab" data-toggle="pill" href="#pills-aikatauluHotel" role="tab" aria-controls="pills-events" aria-selected="true">Aikataulu</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-infoHotel" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaHotel" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-aikatauluHotel" role="tabpanel" aria-labelledby="pills-events-tab"> <!--AIKATAULU SIVUN SISÄLTÖ-->
+						<h4 id="bodies">Torstai 27.8.</h4>
+						<dt>Red Carpet Gaala</dt>
+						<dd>18.00 │ Hotel Sveitsi</dd>
+						<hr>
+						<p id="bodies">Tarkemman aikataulun sekä muutokset näet <a href="https://redcarpetfestari.fi/aikataulu/" target="_blank">aikataulusta</a></p>
+					</div> <!--AIKATAULU SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-infoHotel" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<video width="100%" height="100%" controls id="hotelsveitsiVideo">
+							<source src="videot/rcff2_gaalavideo_karttaan_visulla_24s.mp4" type="video/mp4">
+						</video>
+						<hr>
+						<p>
+							Hotel Sveitsi sijaitsee Hyvinkään Sveitsin alueella noin 2 km:n päässä Hyvinkään keskustasta.<br>
+							<a href="http://www.hyvinkaanliikenne.fi/" target="_blank">Hyvinkään Liikenne</a> liikennöi keskustan ja Hotel Sveitsin välillä aamusta iltaan.<br><br>
+							Hotel Sveitsissä järjestetään Red Carpetin aikaan Red Carpet -gaala, jossa jaetaan vuosittain vaihtuvan juryn valitsemana Red Carpet -tunnustuksia.
+							ISTV näyttää Gaalan suorana lähetyksenä kaikille elokuva-alan ystäville veloituksetta.
+							Lue lisää <a href="https://redcarpetfestari.fi/oheistapahtuma/gaala/" target="_blank">täältä</a>.<br><br>
+							Hotel Sveitsi tarjoaa Red Carpetin kävijöille majoitusta alennushintaan festarin aikana.
+							Lue lisää ja tee huonevaraus <a href="https://redcarpetfestari.fi/info/#majoitus" target="_blank">täältä</a>.
+						</p>
+						<dt>Esteettömyys</dt>
+						<dd>Hotellissa on esteettömät kulkuväylät ja kerrosten välillä on henkilöhissi.
+							Lisäksi hotellista löytyy esteettömät kylpyhuoneet
+							ja pyörätuolien käyttäjille soveltuva pysäköinti.</dd>
+						<dt>Pysäköinti</dt>
+						<dd>Hotellin edustalla on noin 150 parkkipaikkaa,
+							jotka ovat vieraiden käytettävissä veloituksetta.</dd>
+						<dt>Osoite</dt>
+						<dd>Härkävehmaankatu 4, 05900 Hyvinkää</dd>
+						<dt><a href="https://www.hotelsveitsi.fi" target="_blank">Nettisivut</a></dt>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaHotel" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							Vuonna 1976 valmistunut hotelli oli aikoinaan huippusuosittu.<br><br>
+							Sen vakiovieraisiin kuului muun muassa presidentti Urho Kekkonen
+							ja hotellissa kuvattiin myös Miss Suomi -kisoja.
+							Legendaarisen Hyvinkään Rantasipin yökerho tunnettiin
+							ja sinne tultiin pääkaupunkiseutua myöten.
+							Rantasipin yökerhossa viihtyivät niin missit,
+							urheilijat kuin tavalliset kansalaisetkin ja
+							se oli aikoinaan kellonajallisesti pisimpään auki pysyvä yökerho.<br><br>
+							Aika kuitenkin ajoi lomakohteen ohi ja viimeksi Rantasipi Sveitsinä toiminut,
+							rapistumaan päässyt hotelli suljettiin vuodenvaihteessa 2016. <br><br>
+							Hotelli avattiin uudestaan Primehotels -ketjun hotellina vuoden 2017 lopulla,
+							ja se sai nimekseen Hotel Sveitsi.<br><br>
+							Nykyisin Hotel Sveitsissä on 182 modernia huonetta, kolme ravintolaa,
+							aulabaari ja kesäterassi sekä liki 30 kokoustilaa.
+							Hotel Sveitsin yhteydessä on laajat kokouspalvelut, ravintola,
+							uimala, Sveitsin luontomaastot sekä viihdekeskus palveluineen.
+						</p>
+					</div> <!--HISTORIA SIVUN LOPPU-->
+				</div>
+			</div>
+		</div>
+	</div>
+</div> <!--HOTEL SVEITSIN SIVUN LOPPU-->
+
+	<div id="biorexSveitsi" class="modal"> <!--BIOREX SVEITSIN POPUP SIVU-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">BIOREX SVEITSI</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('biorexSveitsi')">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/sveitsi/biorexsveitsi.jpg">
+				<hr>
+				
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-events-tab" data-toggle="pill" href="#pills-aikatauluBiorex" role="tab" aria-controls="pills-events" aria-selected="true">Aikataulu</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-infoBiorex" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaBiorex" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-aikatauluBiorex" role="tabpanel" aria-labelledby="pills-events-tab"> <!--AIKATAULU SIVUN SISÄLTÖ-->
+						<p>Näet valitsemasi päivän aikataulun klikkaamalla päivämäärää.</p>
+						<a id="titleAikatauluBiorex" class="btn" data-toggle="collapse" href="#aikatauluTorstai" role="button" aria-expanded="false" aria-controls="aikatauluTorstai">
+							Torstai 27.8.2020 &darr;
+						</a>
+						<div class="collapse" id="aikatauluTorstai">
+							<div class="card card-body" id="aikatauluCollapse">
+								<ul class="lista">
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/intohimon-aika-gabriel-tule-takaisin-1951/" target="_blank">Intohimon aika: Gabriel, tule takaisin (1951)</a></dt>
+									<dd>14:15 | BioRex Sveitsi Sali 2 | 8 € | Erikoismaininta</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/intohimon-aika-valkoinen-peura-1952/" target="_blank">Intohimon aika: Valkoinen peura (1952)</a></dt>
+									<dd>16:15 | BioRex Sveitsi Sali 2 | 8 € | Erikoismaininta</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/elamaa-kuoleman-jalkeen/" target="_blank">Elämää kuoleman jälkeen</a></dt>
+									<dd>17:15 | BioRex Sveitsi sali 3 | 12 € | Draama</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/helene/" target="_blank">Helene</a></dt>
+									<dd>17:45 | BioRex Sveitsi sali 1 | 12 € | Draama</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/terasleidit/" target="_blank">Teräsleidit</a></dt>
+									<dd>18:15  | BioRex Sveitsi Sali 2 | 12 € | Komedia</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/seurapeli/" target="_blank">Seurapeli</a></dt>
+									<dd>18:30  | BioRex Riihimäki Sali 2 | 12 € | Draama</dd>
+								</ul>
+							</div>
+						</div>
+						<br>
+						<a id="titleAikatauluBiorex" class="btn" data-toggle="collapse" href="#aikatauluPerjantai" role="button" aria-expanded="false" aria-controls="aikatauluPerjantai">
+							Perjantai 28.8.2020 &darr;
+						</a>
+						<div class="collapse" id="aikatauluPerjantai">
+							<div class="card card-body" id="aikatauluCollapse">
+								<ul class="lista">
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/intohimon-aika-valkoiset-ruusut-1943/" target="_blank">Intohimon aika: Valkoiset ruusut (1943)</a></dt>
+									<dd>13:00 | BioRex Sveitsi sali 3 | 8 € | Erikoismaininta</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/intohimon-aika-ihmiset-suviyossa-1948-2/" target="_blank">Intohimon aika: Ihmiset suviyössä (1948)</a></dt>
+									<dd>15:15 | BioRex Sveitsi sali 3 | 8 € | Erikoismaininta</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/orkesterin-edessa/" target="_blank">Orkesterin edessä</a></dt>
+									<dd>16:45 | BioRex Sveitsi sali 3 | 12 € | Dokumentti</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/peruna/" target="_blank">Peruna</a></dt>
+									<dd>17:30 | BioRex Sveitsi sali 1 | 18 € | Juhlaennakko</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/se-mieleton-remppa/" target="_blank">Se mieletön remppa</a></dt>
+									<dd>18:30 | BioRex Sveitsi sali 3 | 12 € | Komedia</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/lyhytelokuvasarja/" target="_blank">Lyhytelokuvasarja</a></dt>
+									<dd>19:30 | BioRex Sveitsi sali 4 | 12 € | Lyhytelokuva</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/seurapeli/" target="_blank">Seurapeli</a></dt>
+									<dd>20:15 | BioRex Sveitsi sali 1 | 12 € | Komedia</dd>
+								</ul>
+							</div>
+						</div>
+						<br>
+						<a id="titleAikatauluBiorex" class="btn" data-toggle="collapse" href="#aikatauluLauantai" role="button" aria-expanded="false" aria-controls="aikatauluLauantai">
+							Lauantai 29.8.2020 &darr;
+						</a>
+						<div class="collapse" id="aikatauluLauantai">
+							<div class="card card-body" id="aikatauluCollapse">
+								<ul class="lista">
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/intohimon-aika-riihalan-valtias-1956/" target="_blank">Intohimon aika: Riihalan Valtias (1956)</a></dt>
+									<dd>12:30 | BioRex Sveitsi sali 4 | 8 € | Erikoismaininta</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/mestari-cheng/" target="_blank">Mestari Cheng</a></dt>
+									<dd>13:45 | BioRex Sveitsi sali 2 | 12 € | Draama</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/intohimon-aika-laulu-tulipunaisesta-kukasta-1938/" target="_blank">Intohimon aika: Laulu tulipunaisesta kukasta (1938)</a></dt>
+									<dd>14:30 | BioRex Sveitsi sali 4 │ 8 € │ Erikoismaininta</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/diva-of-finland/" target="_blank">Diva of Finland</a></dt>
+									<dd>15:00 │ BioRex Sveitsi sali 3 │ 12 € │ Draama</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/tarhapaiva/" target="_blank">Tarhapäivä</a></dt>
+									<dd>16:15 │ BioRex Sveitsi sali 2 │ 12 € │ Komedia</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/marian-paratiisi/" target="_blank">Marian paratiisi</a></dt>
+									<dd>17:00 │ BioRex Sveitsi sali 4 │ 12 € │ Draama</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/aika-jonka-sain/" target="_blank">Aika jonka sain</a></dt>
+									<dd>17:15 │ BioRex Sveitsi sali 3 │ 12 € │ Draama</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/metsajatti/" target="_blank">Metsäjätti</a></dt>
+									<dd>18:00 │ BioRex Sveitsi sali 1 │ 18 € │ Juhlaennakko</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/taydellinen-joulu/" target="_blank">Täydellinen joulu</a></dt>
+									<dd>19:30 │ BioRex Sveitsi sali 4 │ 12 € │ Komedia</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/koirat-eivat-kayta-housuja/" target="_blank">Koirat eivät käytä housuja</a></dt>
+									<dd>19:45 │ BioRex Sveitsi sali 3 │ 12 € │ Draama</dd>
+								</ul>
+							</div>
+						</div>
+						<br>
+						<a id="titleAikatauluBiorex" class="btn" data-toggle="collapse" href="#aikatauluSunnuntai" role="button" aria-expanded="false" aria-controls="aikatauluSunnuntai">
+							Sunnuntai 30.8.2020 &darr;
+						</a>
+						<div class="collapse" id="aikatauluSunnuntai">
+							<div class="card card-body" id="aikatauluCollapse">
+								<ul class="lista">
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/heinahattu-vilttitossu-ja-arhakka-koululainen/" target="_blank">Heinähattu, Vilttitossu ja Ärhäkkä koululainen</a></dt>
+									<dd>12:00 │ BioRex Sveitsi sali 3 │ 8 € │ Lapset ja nuoret</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/risto-rappaaja/" target="_blank">Risto Räppääjä</a></dt>
+									<dd>12:15 │ BioRex Sveitsi sali 1 │ 8 € │ Lapset ja nuoret</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/intohimon-aika-morsiusseppele-1954/" target="_blank">Intohimon aika: Morsiusseppele (1954)</a></dt>
+									<dd>13:00 │ BioRex Sveitsi sali 4 │ 8 € │ Erikoismaininta</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/syksyn-jalkeen-saapuu-kevat/" target="_blank">Syksyn jälkeen saapuu kevät</a></dt>
+									<dd>14:00 │ BioRex Sveitsi sali 3 │ 12 € │ Draama</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/risto-rappaaja-ja-vaara-vincent/" target="_blank">Risto Räppääjä ja väärä Vincent</a></dt>
+									<dd>14:15 │ BioRex Sveitsi sali 1 │ 12 € │ Juhlaennakko</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/intohimon-aika-loviisa-niskavuoren-nuori-emanta-1946/" target="_blank">Intohimon aika: Loviisa-Niskavuoren nuori emäntä (1946)</a></dt>
+									<dd>15:15 │ BioRex Sveitsi sali 4 │ 8 € │ Erikoismaininta</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/tottumiskysymys/" target="_blank">Tottumiskysymys</a></dt>
+									<dd>15:45 │ BioRex Sveitsi sali 2 │ 12 € │ Draama</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/neiti-aika/" target="_blank">Neiti Aika</a></dt>
+									<dd>16:15 │ BioRex Sveitsi sali 3 │ 12 € │ Dokumentti</dd>
+									<hr>
+									<dt><a href="https://redcarpetfestari.fi/elokuva/lyhytdokumentti-naytos/" target="_blank">Lyhytdokumenttisarja</a></dt>
+									<dd>18:00 │ BioRex Sveitsi sali 3 │ 12 € │ Dokumentti</dd>
+								</ul>
+							</div>
+						</div>
+						<hr>
+						<p id="bodies">Tarkemman aikataulun sekä muutokset näet <a href="https://redcarpetfestari.fi/aikataulu/" target="_blank">aikataulusta</a></p>
+			
+					</div> <!--AIKATAULU SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-infoBiorex" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<video width="100%" height="100%" controls id="biorexVideo">
+							<source src="videot/rcff2_leffavideo_karttaan_visulla_20s.mp4" type="video/mp4">
+						</video>
+						<hr>
+						<p>
+							Elokuvateatteri BioRex Sveitsissä järjestetään Red Carpetin yleisönäytöksiä.<br>
+							BioRex Sveitsissä on viisi elokuvasalia, joissa yhteensä noin 400 asiakaspaikkaa.<br>
+							Viimeisimmällä kuva- ja äänentoistotekniikalla varustellun elokuvateatterin erikoisuus
+							on REX -sali, jossa on normaalia leveämmät istuimet sekä sivupöytä jokaiselle katsojalle.
+						</p>
+						<dt>Liput</dt>
+						<dd>Liput elokuviin on myynnissä
+							<a href="https://biorex.fi/biorex-sveitsi-hyvinkaa/?cinema_id=9" target="_blank">BioRexin sivuilla</a>.</dd>
+						<dt>Lippujen hinnat</dt>
+						<dd>
+							Intohimon aika -sarja ja lasten elokuvat 8 €.<br>
+							Muut elokuvanäytökset ja juhlaennakkoelokuva Risto Räppääjä ja väärä Vincent 12 €.<br>
+							Juhlaennakkoelokuvat Metsäjätti ja Peruna 18 €.
+						</dd>
+						<dt>Esteettömyys</dt>
+						<dd>BioRex Sveitsi on esteetön.
+							Salit sisältävät kaksi pyörätuolipaikkaa sekä pistorasiat.
+							Kerrosten välillä on pyörätuolihissi.
+							Pysäköinti on esteetön.</dd>
+						<dt>Pysäköinti</dt>
+						<dd>Paikan edustalla on noin 150 parkkipaikkaa,
+							jotka ovat vieraiden käytettävissä veloituksetta.</dd>
+						<dt>Osoite</dt>
+						<dd>Härkävehmaankatu 4, 05900 Hyvinkää</dd>
+						<dt><a href="https://biorex.fi/biorex-sveitsi-hyvinkaa/" target="_blank">Nettisivut</a></dt>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaBiorex" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							BioRex Sveitsi on valmistunut vuonna 2017,
+							ja se on osa Sveitsin alueen viihdekeskusta.
+							Elokuvateatteri on osa BioRex -elokuvaketjua.
+						</p>
+					</div> <!--HISTORIA SIVUN LOPPU-->
+				</div>
+			</div>
+		</div>
+	</div> <!--BIOREX SVEITSIN SIVUN LOPPU-->
+
+
+	<div id="modalTahtiraitti" class="modal"> <!--TÄHTIRAITIN POPUP SIVU-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">TÄHTIRAITTI</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('modalTahtiraitti')">
+					<span aria-hidden="true">&times;</span> 
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<!--video width="100%" height="100%" controls>
+					<source src="videot/rcff2_tahtiraittivideo2_karttaan_visulla_30s.mp4" type="video/mp4">
+				</video-->
+				<img class="historiaKuvat2" src="images/ModalKuvat/tahtiraitti.jpg">
+				<hr> <!---->
+				
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-events-tab" data-toggle="pill" href="#pills-aikatauluTahtiraitti" role="tab" aria-controls="pills-events" aria-selected="true">Aikataulu</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-infoTahtiraitti" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaTahtiraitti" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-aikatauluTahtiraitti" role="tabpanel" aria-labelledby="pills-events-tab"> <!--AIKATAULU SIVUN SISÄLTÖ-->
+						
+						<dd>Katso suorana ISTVn kautta Red Carpet Gaala torstaina 27.8. klo 19 alkaen. Gaalassa paljastetaan vuoden 2020 Tähtiraitin Tähtien saajat.</dd>
+						<!--hr>
+						<p id="bodies">Tarkemman aikataulun sekä muutokset näet <a href="https://redcarpetfestari.fi/aikataulu/" target="_blank">aikataulusta</a></p-->
+					</div> <!--AIKATAULU SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-infoTahtiraitti" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<video width="100%" height="100%" controls id="tahtiraittiVideo">
+							<source src="videot/rcff2_tahtiraittivideo2_karttaan_visulla_30s.mp4" type="video/mp4">
+						</video>
+						<hr>
+						<p>
+							Maksuton Tähtiraitin uusien tähtien paljastaminen tapahtuu vuosittain Hyvinkään Kirjastoaukiolla Red Carpetin aikaan.<br>
+							Paikan päällä nähdään tähtien saajien lisäksi musiikkia ja juhlallisuuksia.
+						</p>
+						<dt>Esteettömyys</dt>
+						<dd>Alue on esteetön</dd>
+						<dt>Pysäköinti ja saapuminen</dt>
+						<dd>Lähialueelta löytyy maksuttomia pysäköintipaikkoja parkkikiekolla kadun varressa, parkkialueilla tai Kauppakeskus Willan parkkihallissa.<br>
+							Tähtiraitti sijaitsee Hyvinkään keskustassa Kauppakeskus Willan ja Kirjastoaukion välisellä kävelykadulla.<br>
+							Suosittelemme kuitenkin saapumaan paikalle kävellen tai julkisilla kulkuneuvoilla.</dd>
+						<dt>Osoite</dt>
+						<dd>Hämeenkatu 9, 05800 Hyvinkää</dd>
+						<dt><a href="https://redcarpetfestari.fi/oheistapahtuma/tahtiraitti/" target="_blank">Nettisivut</a></dt>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaTahtiraitti" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							Tähtiraitti on Hyvinkään oma Walk of Fame, johon vuosittain valetaan kotimaisten tähtien nimiä Red Carpet -festarin aikaan.<br><br>
+							30.8.2018 avatulle Tähtiraitille ensimmäisenä käden- ja jalanjäljet saivat pitkän uran tehneet näyttelijät Outi Mäenpää ja Vesa-Matti Loiri.<br><br>
+							Vuonna 2019 tähdet kadulle saivat kansainvälistä uraa luoneet näyttelijät Krista Kosonen ja Laura Birn.<br><br>
+							Red Carpetin vuosittain vaihtuva Jury valitsee Tähtiraitin tähtilaattojen saajat.
+						</p>
+					</div> <!--HISTORIA SIVUN LOPPU-->
+				</div>
+			</div>
+
+		</div>
+	</div> <!--TÄHTIRAITTI SIVUN LOPPU-->
+
+	<div id="modalKirjasto" class="modal"> <!--HYVINKÄÄN PÄÄKIRJASTON POPUP SIVU-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">HYVINKÄÄN PÄÄKIRJASTO</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('modalKirjasto')">
+					<span aria-hidden="true">&times;</span> 
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<<img class="historiaKuvat2" src="images/ModalKuvat/kirjasto.jpg">
+				<hr>
+				
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-events-tab" data-toggle="pill" href="#pills-aikatauluKirjasto" role="tab" aria-controls="pills-events" aria-selected="true">Aikataulu</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-infoKirjasto" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaKirjasto" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-aikatauluKirjasto" role="tabpanel" aria-labelledby="pills-events-tab"> <!--AUKIOLOAJAT SIVUN SISÄLTÖ-->
+						<h4 id="bodies">Torstai 27.8.</h4>
+						<dt>Elokuva-tietovisa</dt>
+						<dd>17.45 | Hyvinkään pääkirjasto | Vapaa pääsy</dd>
+
+						<h4 id="bodies">17.8.-2.9.2020</h4>
+						<dt>Hyvinkään vanhojen elokuvateattereiden valokuvanäyttely</dt>
+						<dd>Aukioloaikojen mukaan | Hyvinkäänpääkirjasto | Vapaa pääsy</dd>
+						<hr>
+						<p>Tule testaaman elokuvatietosi rennossa elokuvateemaisessa tietovissa heti tähtien paljastuksen jälkeen.
+							Palkintona elokuvalippuja Red Carpetiin ja tuotepalkintoja.</p>
+
+						<dt>Aukioloajat:</dt>
+						<dd>
+							Kesäaika (1.6.-15.8.), ma-ke 9-19, to-pe 9-17, la suljettu<br>
+							Talviaika (16.8.-31.5.), ma-to 9-10, pe 9-18, la 10-15<br>
+							Kirjasto toimii itsepalveluna ma-ke klo 9-11 ja to-pe klo 9-10.<br>
+							Juhlapyhiä edeltävinä päivinä kirjasto on auki klo 9-16 (itsepalvelu klo 9-10).<br>
+							Lehtisalin aukiolot ovat muuten samat, paitsi talviaikaan lauantaisin se on auki klo 9-15.<br>
+							Musiikkiosaston neuvontapiste sulkeutuu ke-to klo 16.
+						</dd>
+					</div> <!--AUKIOLOAJAT SIVUN SISÄLTÖ-->
+					
+					<div class="tab-pane fade show" id="pills-infoKirjasto" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<p>
+							Hyvinkään pääkirjasto tarjoaa asiakkaiden käyttöön noin 80 000 niteen tietokirjallisuusvalikoiman ja
+							saman määrän kaunokirjallisuutta ja lastenkirjoja, noin 500 aikakaus- ja sanomalehteä, elokuvia, kielikursseja ja musiikkia.
+						</p>
+						<dt>Esteettömyys</dt>
+						<dd> Kirjaston sisääntulokerroksessa ulko-ovella on pieni kynnys.
+							Kirjaston takaovesta voidaan päästää esimerkiksi rollaattorin kanssa liikkuvia, joille rollaattorin nostaminen kynnyksen yli on hankalaa.
+							Takaovella on summeri.
+							Kirjaston kerrosten välillä on hissi, johon mahtuu pyörätuolilla.</dd>
+						<dt>Pysäköinti</dt>
+						<dd>Lähialueelta löytyy maksuttomia pysäköintipaikkoja parkkikiekolla kadun varressa, parkkialueilla tai Kauppakeskus Willan parkkihallissa.
+							Pääkirjasto sijaitsee Kirjastoaukiolla, johon pääsee kävellen.</dd>
+						<dt>Osoite</dt>
+						<dd>Torikatu 5, 05800 Hyvinkää</dd>
+						<dt><a href="https://www.hyvinkaa.fi/kulttuuri-ja-vapaa-aika/kirjasto/" target="_blank">Nettisivut</a></dt>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaKirjasto" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							Hyvinkään kirjaston ensimmäinen sijaintipaikka oli Aseman kansakoulu, jossa lainaustoiminta alkoi 5.6.1921 Hyvinkään kunnan kirjaston nimellä.<br><br>
+							Vuonna 1960 Hyvinkäästä tuli kaupunki ja samalla kirjasto muuttui kaupunginkirjastoksi.<br><br>
+							Keskustan pääkirjastorakennus valmistui 1968 ja peruskorjattiin ja laajennettiin 2002.
+						</p>
+					</div> <!--HISTORIA SIVUN LOPPU-->
+				</div>
+			</div>
+
+		</div>
+	</div> <!--HYVINKÄÄN PÄÄKIRJASTON SIVUN LOPPU-->
+
+	<div id="modalEntinen" class="modal"> <!--ENTINEN ELÄVIEN ELOKUVATEATTERI ARENA POPUP SIVU-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">ENTINEN ELOKUVATEATTERI ARENA</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('modalEntinen')">
+					<span aria-hidden="true">&times;</span> 
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/entinenArena.tif">
+				<hr>
+				
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-open-tab" data-toggle="pill" href="#pills-infoEntinen" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaEntinen" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-infoEntinen" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<p>
+							Tutustu Hyvinkään elokuvahistoriaan!<br>
+							Käy ihailemassa rakennuksen ulkopuolella, miltä on näyttänyt yksi maamme ensimmäisistä elokuvateattereista.<br>
+							Vanha rakennus vie sinut hetkeksi aikamatkalle menneeseen mykkäelokuvien pariin.<br>
+							Elokuvateatteri Arenan rakennus on nykyisin suljettu ja vaatii kunnostusta.
+						</p>
+						<dt>Osoite</dt>
+						<dd>Siltakatu 16, 05900 Hyvinkää </dd>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaEntinen" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							Elävien Kuvien Teatteri, myöhemmin Arena, toimi vuosina 1914-1985, ja oli yksi maamme ensimmäisistä elokuvateattereista maaseudulla.
+							Liikemies Kalle Saukkonen perusti vuonna 1908 Elävien Kuvien Teatterin - Hyvinge Lefvande Bilders Teater.
+							Teatteri sijaitsi alun perin Saukkosen omassa huvilassa Hyvinkään Siltakadulla,
+							mutta vuonna 1914 hän päätti rakennuttaa sitä varten uudisrakennuksen rakennusmestari Oskari Kirkkarin piirustusten mukaan.<br><br>
+							Elokuvateatterin valmistuessa vuonna 1914 elettiin mykkäelokuvien aikaa, mikä määritteli vahvasti myös sitä, miltä elokuvateatteri näytti sisältäpäin.
+							Taidemaalari Jalmari Ruokokosken ainutlaatuiset seinämaalaukset herättivät ihastusta. Ruokokoski poimi aiheensa sirkuksen ja elokuvan maailmasta.
+							Maalauksissa esiintyi näkymiä maapallon eri puolilta.
+							Myöhemmin seinäpaneelien alta löytyneet Ruokokosken seinämaalaukset irrotettiin seiniltä
+							ja konservoitiin esille Hyvinkään kaupungintalon kokoussiipeen vuonna 2011.<br><br>
+							Elokuvien kaupallinen esittäminen Arenassa päättyi vuonna 1985.
+							Hyvinkään kaupunki osti teatterin tontteineen seuraavana vuonna.
+							Kaupungin tarkoituksena oli peruskorjata Arena elokuvakeskukseksi.
+							Talouslaman myötä suunnittelu- ja kunnostustyöt kuitenkin jäivät toteutumatta.
+							Viimeinen elokuvaesitys Arenassa pidettiin 15.11.2003 osana taidemuseon järjestämää Aikakokeita-näyttelyä.
+							Tällöin teatterissa esitettiin Alfred Hitchcockin jännityselokuva Linnut. Vuonna 2007 Arenan rakennus myytiin yksityishenkilölle.
+						</p>
+					</div> <!--HISTORIA SIVUN SISÄLTÖ-->
+				</div>
+			</div>
+
+		</div>
+	</div> <!--ENTINEN ELÄVIEN ELOKUVATEATTERI ARENA SIVUN LOPPU-->
+
+	<div id="modalTaidemuseo" class="modal"> <!--TAIDEMUSEON POPUP SIVU-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">HYVINKÄÄN TAIDEMUSEO</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('modalTaidemuseo')">
+					<span aria-hidden="true">&times;</span> 
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/taidemuseo.jpg">
+				<hr> <!---->
+				
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-events-tab" data-toggle="pill" href="#pills-aikatauluTaidemuseo" role="tab" aria-controls="pills-events" aria-selected="true">Aikataulu</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-infoTaidemuseo" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaTaidemuseo" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-aikatauluTaidemuseo" role="tabpanel" aria-labelledby="pills-open-tab"> <!--AUKIOLOAJAT SIVUN SISÄLTÖ-->
+						<dt>Avoinna</dt>
+						<dd>ti-to 11:00 - 18:00</dd>
+						<dd>pe-su 11:00 - 17:00</dd>
+						<dd>Vapaa sisäänpääsy keskiviikkoisin 16:00 - 18:00</dd>
+						<br>
+						<h4 id="bodies">25.–30.8.2020</h4>
+						<dd>Making of Helene: Dokumentti ja Pienoisnäyttely | Hyvinkään taidemuseo</dd>
+
+					</div> <!--AUKIOLOAJAT SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-infoTaidemuseo" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<p>
+							Museo on keskittynyt pääasiassa suomalaiseen maalaustaiteeseen sekä hyvinkääläismaalareiden,
+							kuten Helene Schjerfbeckin ja Tyko Sallisen teoksien esittelemiseen.
+							Pysyvänä näyttelynä museossa on mm. Yrjö Saarisen ja Kaapo Wirtasen teoksista koostuva näyttely.
+							Lisäksi museossa on vaihtuva näyttely.
+						</p>
+						<dt>Liput</dt>
+						<dd>
+							Red Carpet -leffalipulla pääset puoleen hintaan Hyvinkään taidemuseoon:<br>
+							Aikuiset 3 €<br>
+							Eläkeläiset ja opiskelijat 2,5 €<br><br>
+							Alennus voimassa tapahtumaviikolla 25.-30.8.2020.
+							Alennuksen saat näyttämällä perinteistä elokuvalippua tai sähköistä elokuvakutsua museoon mennessäsi.<br><br>
+							Normaalit hinnat:<br>
+							Aikuiset 6 €<br>
+							Ryhmät yli 10 henkilöä 5 €<br>
+							Eläkeläiset ja opiskelijat 5 €<br>
+							Alle 18-vuotiaat vapaa pääsy<br>
+							Työttömät vapaa pääsy<br>
+							Vuosikortti 15 €<br>
+							Veikkaus-kortilla keskiviikkoisin vapaa sisäänpääsy taidemuseoon.<br>
+							Keskiviikkoisin klo 16-18 vapaa sisäänpääsy taidemuseoon. 
+
+						</dd>
+						<dt>Esteettömyys</dt>
+						<dd>Taidemuseoon esteetön sisäänpääsy, esteetön wc, invapysäköinti ja lainattava pyörätuoli.</dd>
+						<dt>Pysäköinti</dt>
+						<dd>Lähellä sijaitsevat maksuttomat parkkialueet ja kadunvarsipysäköinti.</dd>
+						<dt>Osoite</dt>
+						<dd>Hämeenkatu 3 D, 05800 Hyvinkää</dd>
+						<dt><a href="http://www.hyvinkaantaidemuseo.fi" target="_blank">Nettisivut</a></dt>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaTaidemuseo" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							Hyvinkään taidemuseo on Hyvinkään ydinkeskustassa sijaitseva taidetta esittelevä, vuonna 1982 perustettu museo.<br><br>
+							Museon tilat sijaitsevat Jussitorin liiketalon toisessa kerroksessa.<br><br>
+							Rakennuksen suunnittelivat Raimo ja Ilmo Valjakka.<br><br>
+							Hyvinkään Taidemuseossa vierailee vuosittain yli 15 000 kävijää.
+						</p>
+					</div> <!--HISTORIA SIVU LOPPUU-->
+				</div>
+			</div>
+
+		</div>
+	</div> <!--TAIDEMUSEO SIVUN LOPPU-->
+
+	<div id="modalRautatiemuseo" class="modal"> <!--SUOMEN RAUTATIEMUSEO POPUP SIVU-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">SUOMEN RAUTATIEMUSEO</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('modalRautatiemuseo')">
+					<span aria-hidden="true">&times;</span> 
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/rautatiemuseo.jpg">
+				<hr> <!---->
+				
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-events-tab" data-toggle="pill" href="#pills-aikatauluRautatiemuseo" role="tab" aria-controls="pills-events" aria-selected="true">Aukioloajat</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-infoRautatiemuseo" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaRautatiemuseo" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-aikatauluRautatiemuseo" role="tabpanel" aria-labelledby="pills-open-tab"> <!--AUKIOLOAJAT SIVUN SISÄLTÖ-->
+						<p>
+							Museo on avoinna kesäkaudella 1.6.–31.8. ma-su 10–17.<br><br>
+							Museo on avoinna talvikaudella 1.9.–31.5. ti-pe 12–15, la-su 12–17, kuukauden viimeinen ke 10–15, ma suljettu.
+						</p>
+					</div> <!--AUKIOLOAJAT SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-infoRautatiemuseo" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<p>
+							Höyryvetureita ja junatunnelmaa!
+							Suomen Rautatiemuseo on rautatieliikenteen valtakunnallinen erikoismuseo.
+							Museossa kerrotaan muun muassa rautatieliikenteen ja matkustamisen historiasta sekä rautatieläisten ammattikunnasta.
+							Esillä on mm. höyryvetureita, Lättähattu sekä Venäjän keisarilliset vaunut.
+
+						</p>
+						<dt>Liput</dt>
+						<dd>
+							Red Carpet -leffalipulla pääset alennettuun 5 € hintaan (aikuiset, eläkeläiset, opiskelijat ja työttömät) Suomen Rautatiemuseoon Hyvinkäälle.
+							Alennus on voimassa 24.8. – 6.9.2020. Alennuksen saat näyttämällä perinteistä elokuvalippua tai sähköistä elokuvakutsua museoon mennessäsi.<br>
+							Normaalit hinnat:<br>
+							Aikuiset 9 €<br>
+							Lapset (7-17-v.) 4 €<br>
+							Alle 7-v. ilmaiseksi<br>
+							Opiskelijat, eläkeläiset, työttömät 6 €<br>
+							Perhelippu 18 €
+						</dd>
+						<dt>Esteettömyys</dt>
+						<dd>Esteetön sisäänpääsy osaan tiloista: Näyttelyhallit, veturitalli ja kokoustila.
+							Esteetön wc ja invapysäköinti.</dd>
+						<dt>Pysäköinti</dt>
+						<dd>Museon pihalla sijaitsee maksuton pysäköintialue.</dd>
+						<dt>Osoite</dt>
+						<dd>Hyvinkäänkatu 9, 05800 Hyvinkää</dd>
+						<dt><a href="https://rautatiemuseo.fi" target="_blank">Nettisivut</a></dt>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaRautatiemuseo" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							Suomen Rautatiemuseo sai alkunsa Suomen Rautatievirkamiesyhdistyksen kokouksessa Helsingissä 16.3.1898.<br><br>
+							Kesällä 1974 museo muutti Hyvinkäälle 1870-luvulta peräisin olevaan
+							Hanko–Hyvinkää -rautatien asema- ja varikkoalueelle, joka on peräisin 1870-luvulta.<br><br>
+							Museon nykyinen virallinen nimi, Suomen Rautatiemuseo, otettiin käyttöön vuonna 1994
+							ja vuonna 1997 Opetusministeriö antoi museolle tunnustuksen nimeämällä sen rautatieliikenteen valtakunnalliseksi erikoismuseoksi.
+						</p>
+					</div> <!--HISTORIA SIVUN LOPPU-->
+				</div>
+			</div>
+
+		</div>
+	</div> <!--SUOMEN RAUTATIEMUSEO SIVUN LOPPU-->
+
+	<div id="kulttuuriTerassi" class="modal"> <!--KULTTUURITERASSIN POPUP SIVU-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">KULTTUURITERASSI</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('kulttuuriTerassi')">
+					<span aria-hidden="true">&times;</span> 
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/DSC_3075.jpg">
+				<hr> <!---->
+				
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-events-tab" data-toggle="pill" href="#pills-aikatauluKulttuuriTerassi" role="tab" aria-controls="pills-events" aria-selected="true">Aukioloajat</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-infoKulttuuriTerassi" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-aikatauluKulttuuriTerassi" role="tabpanel" aria-labelledby="pills-open-tab"> <!--AUKIOLOAJAT SIVUN SISÄLTÖ-->
+						<p class="bodies">
+							Avoinna maanantaista lauantaihin säävarauksella.<br>
+							Katso ajankohtaiset aukioloajat Kulttuuriterassin sometileiltä:
+							<b><a href="https://www.facebook.com/kulttuuriterassi" target="_blank">Facebook</a><br>
+							<a href="https://www.instagram.com/kulttuuriterassi/" target="_blank">Instagram</a></b>
+						</p>
+					</div> <!--AUKIOLOAJAT SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-infoKulttuuriTerassi" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<p>
+							Kulttuuriterassi Hyvinkään kirjastoaukiolla tarjoaa tunnelmaa ja livemusiikkia läpi kesän.
+							Kesäterassi tarjoaa paikallisille artisteille esiintymisfoorumin ja kaupunkilaisille viihtyisän kesäolohuoneen.
+							Kulttuuriterassilla nähdään niin paikallisia artisteja kuin isompiakin esiintyjiä pitkin kesää.
+							Tapahtumat pidetään säiden salliessa, ja niitä siirretään mahdollisuuksien mukaan myöhemmille ajankohdille.
+							Ajankohtaisimmat esiintymisajankohdat ja tulevat tapahtumat löydät Kulttuuriterassin someista, joten ota tilit haltuun!
+						</p>
+						<dt>Esteettömyys</dt>
+						<dd>Terassin alue on esteetön, ja terassilla on runsaasti istumapaikkoja.
+							Terassilla ei ole omaa esteetöntä WC:tä.</dd>
+						<dt>Pysäköinti</dt>
+						<dd>Lähistöllä Jussintorin maksuton kiekollinen parkkipaikka sekä maksuton kadunvarsipysäköinti.</dd>
+						<dt>Osoite</dt>
+						<dd>Hyvinkään kirjastoaukio, Hämeenkatu 5 05800 Hyvinkää</dd>
+						<dt>
+						<a href="https://www.facebook.com/kulttuuriterassi" target="_blank">Facebook</a><br>
+						<a href="https://www.instagram.com/kulttuuriterassi/" target="_blank">Instagram</a><br>
+						<a href="https://redcarpetfestari.fi/kulttuuriterassi/" target="_blank">Nettisivut</a></dt>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+				</div>
+			</div>
+
+		</div>
+	</div> <!--KULTTUURITERASSI SIVUN LOPPU-->
+
+	<div id="onniKortteli" class="modal"> <!--ONNI KORTTELIN POPUP SIVU-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">ONNIKORTTELI JA RED CARPET ARENA</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('onniKortteli')">
+					<span aria-hidden="true">&times;</span> 
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/onnikortteli.jpg">
+				<hr> <!---->
+				
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-events-tab" data-toggle="pill" href="#pills-aikatauluOnnikortteli" role="tab" aria-controls="pills-events" aria-selected="true">Aukioloajat</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-infoOnnikortteli" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaOnnikortteli" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+					<div class="tab-pane fade show active" id="pills-aikatauluOnnikortteli" role="tabpanel" aria-labelledby="pills-open-tab"> <!--AUKIOLOAJAT SIVUN SISÄLTÖ-->
+						<p id="bodies">
+							Onnikortteli valmistuu arviolta vuoden 2022 aikana.
+							Red Carpet Arena valmistuu arviolta vuoden 2023 aikana.
+						</p>
+					</div> <!--AUKIOLOAJAT SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-infoOnnikortteli" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<p id="bodies">
+							Hyvinkään ytimeen vain 200 metrin päähän rautatieasemalta rakentuu Onnikortteli laadukkaan asumisen ja arjen helppouden ystäville.<br>
+							Punaisen maton kodit rakentuvat Hyvinkään Wanhan Kenkätehtaan miljööseen,
+							ja suunnittelun kulmakiviin kuuluukin paikkaa kunnioittava kaunis ja toimiva arkkitehtuuri.<br><br>
+							Onnikortteli koostuu asuinkorttelista sekä viereen rakentavasta Red Carpet Arenasta.
+							Uusi monitoimiareena tuo ikiliikkujille ja musiikin ystäville monipuoliset urheilu- ja kulttuurielämykset takapihalle.<br><br>
+							Suunnitelmien mukaan Red Carpet Arena tulee olemaan mitoitettu yli 3000 henkilölle,
+							ja siellä voidaan järjestää tapahtumaa koululiikunnasta messuihin, urheilu- ja musiikkitapahtumiin.
+						</p>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaOnnikortteli" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							Onnikortteli ja Red Carpet Arena tullaan rakentamaan Hyvinkään historian kannalta merkitykselliselle Wanhan Kenkätehtaan tontille.<br>
+							Aivan Hyvinkään keskustan tuntumassa sijaitseva Wanha Kenkätehdas on useassa vaiheessa rakennettu kiinteistö,
+							joka on elinkaarensa aikana muuttunut tehdasrakennuksesta nykyaikaiseksi liike- ja toimistorakennukseksi.<br><br>
+							Rentton Kenkätehtaan nimelläkin tunnettu rakennus sai alkunsa 1920-luvulla, kun August Väisänen ryhtyi valmistamaan siellä jalkineita.<br>
+							Kenkätehtaana toiminta rakennuksessa jatkui aina 1990-luvulle asti, jota seurasi remontit, laajennukset ja toimialavaihdokset.<br>
+							Värikkään historian jatkoksi Rentto rakentaa tontille ensimmäiset Onnikorttelin asuinrakennukset vuonna 2022.
+						</p>
+					</div> <!--HISTORIA SIVUN LOPPU-->
+				</div>
+			</div>
+
+		</div>
+	</div> <!--ONNI KORTTELI SIVUN LOPPU-->
+	
+	<!--POPUP SIVUT PÄÄTTYY-->
+
+	<script>
+		//http://b.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png.setView([60.630023, 24.858086], 15, [60,639954, 24,815156], [60,607303, 24,905990] center [60.630432, 24.851000]
+		var marker = null;
+		var map = L.map('mapid', {center: [60.631281, 24.838195],zoom:14, minZoom: 14, maxZoom: 17});
+
+		
+
+		// C2: 60.585450, 24.954016 C1: 60.642698, 24.788562 setView: true,  [60.642666, 24.787174], [60.587262, 24.954854]
+		var bounds = [[60.642666, 24.787174], [60.587262, 24.954854]];
+		L.imageOverlay('kartta_harmaa_kadunnimet_1.2.png', bounds).addTo(map);
+
+		map.setMaxBounds(bounds);
+		map.on('drag', function() {
+			map.panInsideBounds(bounds, { animate: false });
+		});
+
+		map.locate({maxZoom: 16, watch:true});
+		
+		function onLocationFound(e) {
+			
+			if(marker !== null) {
+				map.removeLayer(marker);
+			}
+
+			marker = new L.marker(e.latlng)//.addTo(map)
+			map.addLayer(marker);
+				//.bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+				//L.circle(e.latlng, radius).addTo(map)
+		}
+		map.on('locationfound', onLocationFound);
+		
+
+		function onLocationError(e) {
+			//alert(e.message);
+			alert("Sijantia ei pystytä paikantamaan, tarkista laitteesi sijaintiasetukset");
+		}
+		map.on('locationerror', onLocationError);
+
+		var iconsize = 80;
+		var iconsizeSveisi = 80;
+
+		if(screen.width > 732) {
+			iconsize = 100;
+			iconsizeSveisi = 100;
+		}
+
+		var testiIcon = L.icon({ //Oheistapahtumat
+			iconUrl: 'icons/rcff_oheistapahtumat_1080p.svg',
+			iconSize: [iconsize, iconsize],
+			//className: 'blinking'
+		});
+
+		var elokuvaIcon = L.icon({ //Elokuvat
+			iconUrl: 'icons/rcff_elokuvat_1080p.svg',
+			iconSize: [iconsize, iconsize]
+		});
+
+		var villatehdasIcon = L.icon({ //Konsertit
+			iconUrl: 'icons/rcff_konsertit_1080pskaalattu.png',
+			iconSize: [iconsize, iconsize]
+		});
+
+		var sveitsiIcon = L.icon({ //Sveitsi
+			iconUrl: 'icons/rcff_yrityksille_1080p.svg',
+			iconSize: [iconsizeSveisi, iconsizeSveisi]
+		});
+
+		var tahtiraittiIcon = L.icon({ //Tähtiraitti
+			iconUrl: 'icons/RCFF_ikonit_tahtiraitti_red.svg',
+			iconSize: [iconsize, iconsize]
+		});
+
+		var mustaInfoIcon = L.icon ({
+			iconUrl: 'icons/RCFF_ikonit_extra_info_musta.svg',
+			iconSize: [iconsize, iconsize]
+		});
+
+		var mustaKompassiIcon = L.icon ({
+			iconUrl: 'icons/RCFF_ikonit_extra_nahtavyys_musta.svg',
+			iconSize: [iconsize, iconsize]
+		});
+
+		var mustaElokuvaIcon = L.icon ({
+			iconUrl: 'icons/RCFF_ikonit_extra_elokuva_musta.svg',
+			iconSize: [iconsize, iconsize]
+		});
+
+		var kulttuuriIcon = L.icon ({
+			iconUrl: 'icons/RCFF_ikonit_kulttuuriterassi1.svg',
+			iconSize: [iconsize, iconsize]
+		});
+
+		var onnikortteliIcon = L.icon ({
+			iconUrl: 'icons/RCFF_ikonit_onnikortteli.svg',
+			iconSize: [iconsize, iconsize]
+		});
+
+		var linjalaRautatieIcon = L.icon ({
+			iconUrl: 'icons/RCFF_ikonit_extra_map_musta.svg',
+			iconSize: [iconsize, iconsize]
+		});
+
+		
+
+		
+		var iconWilla = L.marker([60.632475, 24.863203], {icon: testiIcon, zIndexOffset: 500}).addTo(map).on('click', function() { //Willan iconi
+			document.getElementById("modalWilla").style.display = "block";
+		});
+
+
+		var iconKirkko = L.marker([60.633837, 24.861807], {icon: testiIcon, zIndexOffset: 500}).addTo(map).on('click', function() { //Kirkon iconi
+			document.getElementById("modalHyvinkaankirkko").style.display = "block";
+		});
+
+		var iconJulia = L.marker([60.636205, 24.867205], {icon: elokuvaIcon, zIndexOffset: 1000}).addTo(map).on('click', function() { //Julian iconi
+			document.getElementById("modalJulia").style.display = "block";
+		});
+
+		var iconKinoma = L.marker([60.637201, 24.870299], {icon: elokuvaIcon, zIndexOffset: 1000}).addTo(map).on('click', function() { //Kinoman iconi
+			document.getElementById("modalKinoma").style.display = "block";
+		});
+
+		var iconKirjasto = L.marker([60.631294, 24.863034], {icon: mustaKompassiIcon}).addTo(map).on('click', function() { //Kirjaston iconi
+			document.getElementById("modalKirjasto").style.display = "block";
+		});
+
+		var iconTahti = L.marker([60.631998, 24.862036], {icon: tahtiraittiIcon, zIndexOffset: 100}).addTo(map).on('click', function() { //Tähtiraitin iconi
+			document.getElementById("modalTahtiraitti").style.display = "block";
+		});
+
+		var iconHyvinkaasali = L.marker([60.629570, 24.863046], {icon: elokuvaIcon, zIndexOffset: 1000}).addTo(map).on('click', function() { //Hyvinkääsalin iconi
+			document.getElementById("modalHyvinkaansali").style.display = "block";
+		}); 
+
+		var iconTaidemuseo = L.marker([60.631025, 24.860114], {icon: mustaKompassiIcon}).addTo(map).on('click', function() { //Taidemuseon iconi
+			document.getElementById("modalTaidemuseo").style.display = "block";
+		});
+
+		var iconRautatieasema = L.marker([60.631541, 24.856206], {icon: linjalaRautatieIcon}).addTo(map).on('click', function() { //Rautatieaseman iconi
+			document.getElementById("modalRautatieasema").style.display = "block";
+		});
+
+		var iconLinjaautoasema = L.marker([60.628409, 24.856308], {icon: linjalaRautatieIcon}).addTo(map).on('click', function() { //Linjaautoaseman iconi
+			document.getElementById("modalHyvinkaanlinjaautoasema").style.display = "block";
+		});
+
+		var iconEntinenElävä = L.marker([60.631700, 24.849113], {icon: mustaElokuvaIcon}).addTo(map).on('click', function() { //Entisen Elävien iconi
+			document.getElementById("modalEntinen").style.display = "block";
+		});
+
+		var iconRautatiemuseo = L.marker([60.625880, 24.848081], {icon: mustaKompassiIcon}).addTo(map).on('click', function() { //Rautatiemuseon iconi
+			document.getElementById("modalRautatiemuseo").style.display = "block";
+		});
+
+		/*var iconSveitsi = L.marker([60.632647, 24.834024], {icon: sveitsiIcon}).addTo(map).on('click', function() { //Sveitsin iconi. Alkuperäset Koordinaatit ennen png karttaa: 60.632421, 24.832589
+			document.getElementById("modalSveitsi").style.display = "block";
+		}) ;*/
+
+		var iconSveitsiBiorex = L.marker([60.633241, 24.833027], {icon: elokuvaIcon, zIndexOffset: 1000}).addTo(map).on('click', function() {
+			document.getElementById("biorexSveitsi").style.display = "block";
+		});
+
+		var iconSveitsiHotel = L.marker([60.633061, 24.831525], {icon: sveitsiIcon}).addTo(map).on('click', function() {
+			document.getElementById("hotelSveitsi").style.display = "block";
+		});
+
+		var iconSveitsiViihdekeskus = L.marker([60.633724, 24.832274], {icon: testiIcon, zIndexOffset: 500}).addTo(map).on('click', function() {
+			document.getElementById("viihdekeskusSveitsi").style.display = "block";
+		});
+
+		var iconKulttuuriterassi = L.marker([60.631463, 24.862138], {icon: kulttuuriIcon, zIndexOffset: 100}).addTo(map).on('click', function() {
+			document.getElementById("kulttuuriTerassi").style.display = "block";
+		});
+
+		var iconOnnikortteli = L.marker([60.630911, 24.850434], {icon: onnikortteliIcon}).addTo(map).on('click', function() {
+			document.getElementById("onniKortteli").style.display = "block";
+		});
+
+		
+
+		var modalWilla = document.getElementById("modalWilla");
+		var modalHyvinkaansali = document.getElementById("modalHyvinkaansali");
+		var modalRautatieasema = document.getElementById("modalRautatieasema");
+		var modalJulia = document.getElementById("modalJulia");
+		var modalKinoma = document.getElementById("modalKinoma");
+		var modalHyvinkaankirkko = document.getElementById("modalHyvinkaankirkko");
+		var modalVillatehdas = document.getElementById("modalVillatehdas");
+		var modalHyvinkaanlinjaautoasema = document.getElementById("modalHyvinkaanlinjaautoasema");
+		
+		var modalSveitsi = document.getElementById("modalSveitsi");
+		var hotelSveitsi = document.getElementById("hotelSveitsi");
+		var viihdekeskusSveitsi = document.getElementById("viihdekeskusSveitsi");
+		var biorexSveitsi = document.getElementById("biorexSveitsi");
+
+		var modalTahtiraitti = document.getElementById("modalTahtiraitti");
+		var modalKirjasto = document.getElementById("modalKirjasto");
+		var modalEntinen = document.getElementById("modalEntinen");
+		var modalTaidemuseo = document.getElementById("modalTaidemuseo");
+		var modalRautatiemuseo = document.getElementById("modalRautatiemuseo");
+		var modalKulttuuriterassi = document.getElementById("kulttuuriTerassi");
+		var modalOnnikortteli = document.getElementById("onniKortteli");
+
+		var sideNavigation = document.getElementById("sivuNavi");
+		var sideNavigationKohdinnus = document.getElementById("testinavi");
+		var sideNavigationVideo = document.getElementById("testivideo");
+
+		var MapinID = document.getElementById("mapid");
+		var HeaderinID = document.getElementById("headeri");
+		
+
+		window.onclick = function(event) {
+			switch(event.target) {
+				case modalWilla:
+					modalWilla.style.display = "none";
+					break;
+				case modalHyvinkaansali:
+					modalHyvinkaansali.style.display = "none";
+					document.getElementById("hyvinkaasaliVideo").pause();
+					break;
+				case modalRautatieasema:
+					modalRautatieasema.style.display = "none";
+					break;
+				case modalJulia:
+					modalJulia.style.display = "none";
+					document.getElementById("juliaVideo").pause();
+					break;
+				case modalKinoma:
+					modalKinoma.style.display = "none";
+					document.getElementById("kinomaVideo").pause();
+					break;
+				case modalHyvinkaankirkko:
+					modalHyvinkaankirkko.style.display = "none";
+					break;
+				case modalHyvinkaanlinjaautoasema:
+					modalHyvinkaanlinjaautoasema.style.display = "none";
+					break;
+				case hotelSveitsi:
+					hotelSveitsi.style.display = "none";
+					document.getElementById("hotelsveitsiVideo").pause();
+					break;
+				case viihdekeskusSveitsi:
+					viihdekeskusSveitsi.style.display = "none";
+					break;
+				case biorexSveitsi:
+					biorexSveitsi.style.display = "none";
+					break;
+				case modalTahtiraitti:
+					modalTahtiraitti.style.display = "none";
+					document.getElementById("tahtiraittiVideo").pause();
+					break;
+				case modalKirjasto:
+					modalKirjasto.style.display = "none";
+					break;
+				case modalEntinen:
+					modalEntinen.style.display = "none";
+					break;
+				case modalTaidemuseo:
+					modalTaidemuseo.style.display = "none";
+					break;
+				case modalRautatiemuseo:
+					modalRautatiemuseo.style.display = "none";
+					break;
+				case MapinID:
+					sideNavigation.style.width = "0";
+					sideNavigationKohdinnus.style.width = "0";
+					break;
+				case HeaderinID:
+					sideNavigation.style.width = "0";
+					sideNavigationKohdinnus.style.width = "0";
+					break;
+				case modalKulttuuriterassi:
+					modalKulttuuriterassi.style.display = "none";
+					break;
+				case modalOnnikortteli:
+					modalOnnikortteli.style.display = "none";
+					break;
+				default:
+					break;
+			}
+		}
+			
+		
+
+	</script>
+	</body>
+</html>
