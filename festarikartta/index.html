@@ -88,6 +88,12 @@
 		<a onclick="paikkaKohdistus(iconRautatieasema)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Rautatieasema</a>
 		<a onclick="paikkaKohdistus(iconLinjaautoasema)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Linjala</a>
 		<a onclick="paikkaKohdistus(iconOnnikortteli)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Onnikortteli</a>
+
+		<br><br>
+
+		<h3 id="titleTapahtumapaikatPaaotsikot"><img src="icons/rcff_konsertit_1080p.png" width="64" height="64"/>&nbsp;KONSERTIT</h3>
+		<hr color="gray" width="70%">
+		<a onclick="paikkaKohdistus(iconVillatehdas)" type="button" id="bodiesPaikkalista" style="background-color:#111111">Villatehdas</a>
 		
 	</div>
 	
@@ -167,6 +173,74 @@
 		</div>
 	</div> <!--WILLAN POPUP SIVU LOPPUU-->
 
+	<div id="modalVillatehdas" class="modal"> <!--VILLATEHDAS POPUP SIVU-->
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="titlePopups">VILLATEHDAS</h5> <!--POPUP SIVUN OTSIKKO-->
+				<button type="button" class="close" onclick="suljePopup('modalVillatehdas')">
+					<span aria-hidden="true">&times;</span> 
+				</button>
+			</div>
+
+			<div class="modal-body" id="bodies">
+				<img class="historiaKuvat2" src="images/ModalKuvat/villatehdas.jpg"> <!--POPUP SIVUN KUVA-->
+				<hr> <!---->
+				<ul class="nav mb-3 nav-pills nav-justified" id="pills-tab" role="tablist"> <!--VÄLILEHTIEN OTSIKOT ALKAA-->
+				
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-open-tab" data-toggle="pill" href="#pills-aikatauluVillatehdas" role="tab" aria-controls="pills-open" aria-selected="true">Aikataulu</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-open-tab" data-toggle="pill" href="#pills-infoVillatehdas" role="tab" aria-controls="pills-open" aria-selected="true">Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-info-tab" data-toggle="pill" href="#pills-historiaVillatehdas" role="tab" aria-controls="pills-info" aria-selected="true">Historia</a>
+					</li>
+					
+				</ul> <!--VÄLILEHTIEN OTSIKOT LOPPUU-->
+				<hr>
+				<div class="tab-content" id="pills-tabContent">
+				
+					<div class="tab-pane fade show active" id="pills-aikatauluVillatehdas" role="tabpanel" aria-labelledby="pills-events-tab"> <!--AIKATAULU SIVUN SISÄLTÖ-->
+						<p id="bodies">Tarkemman aikataulun sekä muutokset näet <a href="https://redcarpetfestari.fi/aikataulu/" target="_blank">aikataulusta</a></p>
+
+						<h4 id="bodies">27.8</h4>
+						<dt><a href="https://redcarpetfestari.fi/konsertit/" target="_blank">Elastinen, Happoradio, Ida Paul & Kalle Lindroth ja Pete Parkkonen</a></dt>
+						<dd>Perjantaina 27.8.2021 Hyvinkään Villatehtaan alue auki on 18-02. Tarkempi soittoaikataulu julkaistaan myöhemmin. K-18.</dd>
+
+						<h4 id="bodies">28.8</h4>
+						<dt><a href="https://redcarpetfestari.fi/konsertit/" target="_blank">Sanni, Ellinoora, Teflon Brothers, Gasellit, ABREU ja Jukka Poika</a></dt>
+						<dd>Lauantaina 28.8.2021 Hyvinkään Villatehtaan alue on auki klo 16-02. Tarkempi soittoaikataulu julkaistaan myöhemmin. K-18.</dd>
+
+						<h4 id="bodies">29.8</h4>
+						<dt><a href="https://redcarpetfestari.fi/konsertit/" target="_blank">Anssi Kela ja Olavi Uusivirta</a></dt>
+						<dd>Syke-sunnuntaina 29.8.2021 Hyvinkään Villatehtaan alue on auki klo 15-20. Tarkempi soittoaikataulu julkaistaan myöhemmin.</dd>	
+						<hr>
+						
+					</div> <!--AIKATAULU SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-infoVillatehdas" role="tabpanel" aria-labelledby="pills-open-tab"> <!--INFO SIVUN SISÄLTÖ-->
+						<video width="100%" height="100%" controls id="villatehdasVideo">
+							<source src="videot/rcff2_konserttivideo_karttaan_visulla_27s.mp4" type="video/mp4">
+						</video>
+						<hr>
+						<p>
+						Hyvinkään Villatehtaan alueella järjestetään Red Carpetin aikaan konsertteja
+						<p>
+					</div> <!--INFO SIVUN LOPPU-->
+					
+					<div class="tab-pane fade show" id="pills-historiaVillatehdas" role="tabpanel" aria-labelledby="pills-info-tab"> <!--HISTORIA SIVUN SISÄLTÖ-->
+						<p>
+							<!--Villatehtaan historiaa.-->
+						</p>
+					</div> <!--HISTORIA SIVUN LOPPU-->
+				</div>
+			</div>
+
+		</div>
+	</div> <!--VILLATEHDAS POPUP SIVUN LOPPU-->
+
 	<div id="modalHyvinkaansali" class="modal"> <!--HYVINKÄÄSALIN POPUP SIVU-->
 		<div class="modal-content">
 
@@ -200,12 +274,12 @@
 						<p id="bodies">Tarkemman aikataulun sekä muutokset näet <a href="https://redcarpetfestari.fi/aikataulu/" target="_blank">aikataulusta</a></p>
 						
 						<h4 id="bodies">26.8</h4>
-						<dt>Kummeli esittää: Kontio & Parmas -elokuva</dt>
+						<dt><a href="https://redcarpetfestari.fi/elokuva/kontio-ja-parmas/" target="_blank">Kummeli esittää: Kontio & Parmas -elokuva</a></dt>
 						<dd>18:00 │ Hyvinkääsali │ 18 €</dd>
 
 						<h4 id="bodies">29.8</h4>
-						<dt>Syke-sunnarit juhlaennakkoelokuva: Syke - Hätätila</dt>
-						<dd>15:00 | Hyvinkääsali | 54,90 €</dd>	
+						<dt><a href="https://redcarpetfestari.fi/elokuva/syke-elokuva-hatatila/" target="_blank">Syke-sunnarit juhlaennakkoelokuva: Syke - Hätätila</a></dt>
+						<dd>14:00 | Hyvinkääsali | 54,90 €</dd>	
 						<hr>
 					</div> <!--AIKATAULU SIVUN LOPPU-->
 					
@@ -401,11 +475,11 @@
 					<div class="tab-pane fade show active" id="pills-aikatauluKinoma" role="tabpanel" aria-labelledby="pills-events-tab"> <!--AIKATAULU SIVUN SISÄLTÖ-->
 						<p id="bodies">Tarkemman aikataulun sekä muutokset näet <a href="https://redcarpetfestari.fi/aikataulu/" target="_blank">aikataulusta</a></p>
 						<h4 id="bodies">Lauantai 28.8</h4>
-						<dt>Lapset elokuvantekijöinä -lyhytelokuvia</dt>
+						<dt><a href="https://redcarpetfestari.fi/elokuva/lapset-elokuvantekijoina-lyhytelokuvia/" target="_blank">Lapset elokuvantekijöinä -lyhytelokuvia</a></dt>
 						<dd>13:00 │ Kinoma │ Vapaa pääsy</dd>
 
 						<h4 id="bodies">Lauantai 28.8</h4>
-						<dt>Nuoret elokuvantekijät goes Red Carpet</dt>
+						<dt><a href="https://redcarpetfestari.fi/elokuva/nuoret-elokuvantekijat-goes-red-carpet-2/" target="_blank">Nuoret elokuvantekijät goes Red Carpet</a></dt>
 						<dd>14:30 │ Kinoma │ Vapaa pääsy</dd>
 						<hr>
 					</div> <!--AIKATAULU SIVUN LOPPU-->
@@ -477,15 +551,15 @@
 					<div class="tab-pane fade show active" id="pills-aikatauluKirkko" role="tabpanel" aria-labelledby="pills-events-tab"> <!--AIKATAULU SIVUN SISÄLTÖ-->
 						<p id="bodies">Tarkemman aikataulun sekä muutokset näet <a href="https://redcarpetfestari.fi/aikataulu/" target="_blank">aikataulusta</a></p>
 						<h4 id="bodies">Maanantai 23.8</h4>
-						<dt>Red Carpet goes kirkko- keskustelutilaisuus</dt>
+						<dt><a href="https://redcarpetfestari.fi/oheistapahtuma/red-carpet-goes-kirkko/" target="_blank">Red Carpet goes kirkko- keskustelutilaisuus</a></dt>
 						<dd>18:00 │ Hyvinkään kirkko │ Vapaa pääsy</dd>
 
 						<h4 id="bodies">Keskiviikko 25.8</h4>
-						<dt>Elämä. Kuolema. Syke –Keskustelutilaisuus</dt>
+						<dt><a href="https://redcarpetfestari.fi/oheistapahtuma/elama-kuolema-syke-keskustelutilaisuus/" target="_blank">Elämä. Kuolema. Syke –Keskustelutilaisuus</a></dt>
 						<dd>18:30 │ Hyvinkään kirkko │ Vapaa pääsy</dd>
 
 						<h4 id="bodies">Sunnuntai 29.8</h4>
-						<dt>Elokuvamessu</dt>
+						<dt><a href="https://redcarpetfestari.fi/oheistapahtuma/elokuvamessu/" target="_blank">Elokuvamessu</a></dt>
 						<dd>12:00 │ Hyvinkään kirkko │ Vapaa pääsy</dd>
 						<hr>
 					</div> <!--AIKATAULU SIVUN LOPPU-->
@@ -655,7 +729,7 @@
 					<div class="tab-pane fade show active" id="pills-aikatauluHotel" role="tabpanel" aria-labelledby="pills-events-tab"> <!--AIKATAULU SIVUN SISÄLTÖ-->
 						<p id="bodies">Tarkemman aikataulun sekä muutokset näet <a href="https://redcarpetfestari.fi/aikataulu/" target="_blank">aikataulusta</a></p>
 						<h4 id="bodies">Torstai 26.8</h4>
-						<dt>Red Carpet Gaala</dt>
+						<dt><a href="https://redcarpetfestari.fi/oheistapahtuma/gaala/" target="_blank">Red Carpet Gaala</a></dt>
 						<dd>18:00 │ Hotel Sveitsi │ Livelähetys</dd> -->
 						<hr>
 					</div> <!--AIKATAULU SIVUN LOPPU-->
@@ -848,15 +922,9 @@
 									<hr>
 									<dt><a href="https://redcarpetfestari.fi/elokuva/syke-elokuva-hatatila/" target="_blank">Syke-elokuva: Hätätila (2021)</a></dt>
 									<dd>13:00 | BioRex Sveitsi sali 1 | 18 € | Draama, Trilleri</dd>
-									<hr>
-									<dt><a href="https://redcarpetfestari.fi/elokuva/terasleidit/" target="_blank">Teräsleidit</a></dt>
-									<dd>xx:yy  | BioRex Sveitsi Sali 2 | hinta€ | Komedia</dd>
-									<hr>
-									<dt><a href="https://redcarpetfestari.fi/elokuva/seurapeli/" target="_blank">Seurapeli</a></dt>
-									<dd>xx:yy  | BioRex Riihimäki Sali 2 | hinta€ | Draama, Trilleri</dd>
 								</ul>
 							</div>
-						</div> -->
+						</div>
 						<hr>
 			
 					</div> <!--AIKATAULU SIVUN LOPPU-->
@@ -944,7 +1012,7 @@
 						<hr>
 						<p id="bodies">Tarkemman aikataulun sekä muutokset näet <a href="https://redcarpetfestari.fi/aikataulu/" target="_blank">aikataulusta</a></p-->
 						<h4 id="bodies">Torstai 26.8</h4>
-						<dt>Tähtiraitin uudet tähdet</dt>
+						<dt><a href="https://redcarpetfestari.fi/oheistapahtuma/tahtiraitti/" target="_blank">Tähtiraitin uudet tähdet</a></dt>
 						<dd>17:00 │ Kirjastoaukio │ Vapaa pääsy</dd>
 					</div> <!--AIKATAULU SIVUN LOPPU-->
 					
@@ -1556,6 +1624,10 @@
 		var iconHyvinkaasali = L.marker([60.629570, 24.863046], {icon: elokuvaIcon, zIndexOffset: 1000}).addTo(map).on('click', function() { //Hyvinkääsalin iconi
 			document.getElementById("modalHyvinkaansali").style.display = "block";
 		}); 
+		
+		var iconVillatehdas = L.marker([60.632702, 24.868393], {icon: villatehdasIcon, zIndexOffset: 1000}).addTo(map).on('click', function() { //Villatehtaan iconi
+			document.getElementById("modalVillatehdas").style.display = "block";
+		});
 
 		var iconTaidemuseo = L.marker([60.631025, 24.860114], {icon: mustaKompassiIcon}).addTo(map).on('click', function() { //Taidemuseon iconi
 			document.getElementById("modalTaidemuseo").style.display = "block";
